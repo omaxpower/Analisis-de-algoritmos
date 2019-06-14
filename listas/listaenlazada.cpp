@@ -1,4 +1,3 @@
-//probando
 #include<iostream>
 #include<conio.h>
 #include<stdlib.h>
@@ -21,7 +20,7 @@ class Lista
 		int valor;
 		int pos;
 	public:
-		Lista(int=0, int=0, int=0);
+		Lista(int=0, int=0, int=0);		
 		void InsertarInicio(Tlista &lista, int=0);
 		void InsertarFinal(Tlista &lista, int=0);
 		int InsertarAntesDespues();
@@ -30,6 +29,7 @@ class Lista
 		void ReportarLista(Tlista lista);
 		void EliminarElemento(Tlista &lista, int=0);
 		void EliminarRepetidos(Tlista &lista, int=0);
+		void OrdenarLista(Tlista lista);
 		void menu();
 };
 
@@ -40,29 +40,52 @@ Lista::Lista(int _nro, int _valor, int _pos)
 	pos= _pos;
 }
 
+void Lista::OrdenarLista(Tlista lista){
+	Tlista actual , siguiente;
+     int t;
+     
+     actual = lista;
+     while(actual->sgte != NULL)
+     {
+          siguiente = actual->sgte;
+          
+          while(siguiente!=NULL)
+          {
+               if(actual->nro > siguiente->nro)
+               {
+                    t = siguiente->nro;
+                    siguiente->nro = actual->nro;
+                    actual->nro = t;          
+               }
+               siguiente = siguiente->sgte;                    
+          }    
+          actual = actual->sgte;
+          siguiente = actual->sgte;
+}
+}
+
 void Lista::InsertarInicio(Tlista &lista, int valor)
 {
 	Tlista q;
 	q= new(Nodo);
 	q->nro= valor;
 	q->sgte= lista;
-	lista= q;
+	lista= q; 	
 	system("cls");
 }
 
-void Lista::InsertarFinal(Tlista &lista, int valor)
-{
+void Lista::InsertarFinal(Tlista &lista, int valor){
 	Tlista t, q= new(Nodo);
 	q->nro= valor;
 	q->sgte= NULL;
-
+	
 	if(lista==NULL)
 		lista=q;
-
+	
 	else
 	{
 		t= lista;
-
+		
 		while(t->sgte != NULL)
 			t= t->sgte;
 		t->sgte= q;
@@ -70,41 +93,39 @@ void Lista::InsertarFinal(Tlista &lista, int valor)
 	system("cls");
 }
 
-int Lista::InsertarAntesDespues()
-{
+int Lista::InsertarAntesDespues(){
 	int op, band;
-
+	
 	cout<<"\n\t 1. Antes de la pocision \n\t 2. Despues de la posicion \n\t Opcion: ";
 	cin>>op;
-
+	
 	if(op==1)
 		band= -1;
 	else
 		band= 0;
-
+	
 	return band;
 system("cls");
 }
 
 
-void Lista::InsertarElemento(Tlista &lista, int valor, int pos)
-{
+void Lista::InsertarElemento(Tlista &lista, int valor, int pos){
 	Tlista q, t;
 	int i;
 	q= new(Nodo);
 	q->nro= valor;
-
+	
 	if(pos == 1)
 	{
 		q->sgte= lista;
 		lista= q;
 	}
-
+	
 	else
 	{
 		int x= InsertarAntesDespues();
 		t= lista;
-
+		
 		for(i=1; t!=NULL; i++)
 		{
 			if(i == pos+x)
@@ -113,20 +134,19 @@ void Lista::InsertarElemento(Tlista &lista, int valor, int pos)
 				t->sgte= q;
 				return;
 			}
-
-			t= t->sgte;
-		}
+			
+			t= t->sgte;	
+		}	
 	}
-
+	
 	cout<<"\t Error, posicion no encontrada"<<endl;
 	system("cls");
 }
 
-void Lista::BuscarElemento(Tlista lista, int valor)
-{
+void Lista::BuscarElemento(Tlista lista, int valor){
 	Tlista q= lista;
 	int i=1, band=0;
-
+	
 	while(q != NULL)
 	{
 		if(q->nro == valor)
@@ -134,21 +154,20 @@ void Lista::BuscarElemento(Tlista lista, int valor)
 			cout<<"\n Encontrada en posicion "<<i<<endl;
 			band= 1;
 		}
-
+		
 		q= q->sgte;
 		i++;
 	}
-
+	
 	if(band == 0)
 		cout<<"\n Numero no encontrado "<<endl;
 	getch();
 	system("cls");
 }
 
-void Lista::ReportarLista(Tlista lista)
-{
+void Lista::ReportarLista(Tlista lista){
 	int i= 0;
-
+	
 	while(lista != NULL)
 	{
 		cout<<' '<<i+1<<") "<<lista->nro<<endl;
@@ -157,14 +176,13 @@ void Lista::ReportarLista(Tlista lista)
 	}
 	getch();
 	system("cls");
-
+	
 }
 
-void Lista::EliminarElemento(Tlista &lista, int valor)
-{
+void Lista::EliminarElemento(Tlista &lista, int valor){
 	Tlista p, ant;
 	p= lista;
-
+	
 	if(lista != NULL){
 		while(p != NULL){
 			if(p->nro == valor){
@@ -172,33 +190,32 @@ void Lista::EliminarElemento(Tlista &lista, int valor)
 					lista = lista->sgte;
 					system("cls");
 				}
-
+					
 				else{
 					ant->sgte= p->sgte;
 				}
-
+				
 				delete(p);
 				return;
 			}
 			ant = p;
-			p= p->sgte;
-			system("cls");
-
+			p= p->sgte;	
+			system("cls");	
+			
 		}
 	}
-
+	
 	else
 		cout<<"\n Lista Vacia"<<endl;
 	getch();
 	system("cls");
 }
 
-void Lista::EliminarRepetidos(Tlista &lista, int valor)
-{
+void Lista::EliminarRepetidos(Tlista &lista, int valor){
 	Tlista q, ant;
 	q= lista;
 	ant= lista;
-
+	
 	while(q != NULL)
 	{
 		if(q->nro == valor)
@@ -209,7 +226,7 @@ void Lista::EliminarRepetidos(Tlista &lista, int valor)
 				delete(q);
 				q= lista;
 			}
-
+			
 			else
 			{
 				ant->sgte= q->sgte;
@@ -217,34 +234,36 @@ void Lista::EliminarRepetidos(Tlista &lista, int valor)
 				q= ant->sgte;
 			}
 		}
-
+		
 		else
 		{
 			ant= q;
 			q= q->sgte;
 		}
 	}
-
+	
 	cout<<"\n Valores eliminados"<<endl;
 }
 
-void Lista::menu()
-{
-
+void Lista::menu(){
 	cout<<"\n\t Lista enlazada simple \n\n";
-	cout<<" 1. Insertar  al Inicio\n 2. Insertar al Final\n";
-	cout<<" 3. Insertar en una posicion\n 4. Reportar lista\n";
-	cout<<" 5. Buscar elemento\n 6. Eliminar elemento 'v'\n";
-	cout<<" 7. Eliminar elementos con valor 'v'\n 8. Salir\n";
+	cout<<" 1. Insertar  al Inicio\n";
+	cout<<" 2. Insertar al Final\n";
+	cout<<" 3. Insertar en una posicion\n"; 
+	cout<<" 4. Reportar lista\n";
+	cout<<" 5. Buscar elemento\n";
+	cout<<" 6. Eliminar elemento 'v'\n";
+	cout<<" 7. Eliminar elementos con valor 'v'\n";
+	cout<<" 8. Ordenar elementos\n";	
+	cout<<" 9. Salir\n";
 	cout<<" Ingrese una opcion: ";
 }
 
-int main()
-{
+int main(){
 	Tlista lista= NULL;
 	Lista list;
 	int op, dato ,_pos;
-
+	
 	do{
 		list.menu();
 		cin>>op;
@@ -283,13 +302,17 @@ int main()
 				cin>>dato;
 				list.EliminarRepetidos(lista, dato);
 				break;
+			case 8:
+				cout<<"\nLista ordenada: ";
+				list.OrdenarLista(lista);
 			cout<<"\n\n";
-			system("pause");
+			system("pause"); 
 			system("cls");
 		}
-
-	}while(op!=8);
-
+		
+	}while(op!=9);
+	
 	system("pause");
 	return 0;
 }
+
