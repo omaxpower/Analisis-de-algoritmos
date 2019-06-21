@@ -1,0 +1,3 @@
+https://jariasf.wordpress.com/2012/03/19/camino-mas-corto-algoritmo-de-dijkstra/
+
+https://foro.elhacker.net/programacion_cc/algoritmo_de_dijkstra_paso_a_paso-t427371.0.html
